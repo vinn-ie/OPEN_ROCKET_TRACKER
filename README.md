@@ -1,6 +1,6 @@
 # LOGICOMA_LOW_COST_ROCKET_TRACKER
 
-Open source, low cost, long range (15km) GPS tracker for rocketry. Only 22mm x 48mm. 
+Open source, low cost, long range (15km) GPS tracker for rocketry. A 4 layer board designed in Fusion 360. Designed to fit in the smallest rockets at only 22mm x 48mm. 
 
 No radio licence required within Australia. A second board can be used as a base station to log position data. 
 
