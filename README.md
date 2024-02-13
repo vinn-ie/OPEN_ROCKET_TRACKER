@@ -13,7 +13,7 @@ CORE: MAMWLE-02
 * LoRa radio: Semtech SX1262 (915 MHz)
 * Programming: ST-Link 6 pin micro breakout design
 
-![image](https://github.com/roboticsmick/LOGICOMA_LOW_COST_ROCKET_TRACKER/assets/70121687/8808fd6a-6d60-4f33-87eb-f937c80449bb)
+![image](https://github.com/roboticsmick/LOGICOMA_LOW_COST_ROCKET_TRACKER/assets/70121687/19545ffb-45a1-46d6-b621-122c30913809)
 
 GPS: UBlox MAX-M10S
 * Max Altitude: 80,000m
