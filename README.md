@@ -32,5 +32,6 @@ Power systems:
 USB-C battery charging.
 
 To do:
-Implement in Zephyr RTOS.
-Build a low cost base station with LCD screen to output GPS coordinates, and direction to position usings GPS and compass.
+* Implement in Zephyr RTOS.
+* Design low cost base station with SD card logger, and LCD screen to output GPS coordinates, and direction to position usings GPS and compass.
+* Update serial programmer design to allow easy jumpers.
