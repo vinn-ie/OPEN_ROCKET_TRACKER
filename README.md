@@ -4,7 +4,7 @@ Open source, low cost, long range (15km) GPS tracker for rocketry. Uses a 4 laye
 
 No radio licence required within Australia. A second board can be used as a base station to log position data via a serial input on a laptop. 
 
-![image](https://github.com/roboticsmick/LOGICOMA_LOW_COST_ROCKET_TRACKER/assets/70121687/0a228a9a-4336-422a-8d21-9c58338da366)
+![image](https://github.com/roboticsmick/OPEN_ROCKET_TRACKER/assets/70121687/0f4b6a38-8444-4cc8-9088-4b34cedbe52a)
 
 CORE: WIO-E5 LoRa MODULE 
 * CPU architecture: STM32WL Cortex M4 32 bit @ 48MHz
