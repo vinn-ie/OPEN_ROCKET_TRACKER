@@ -1,10 +1,10 @@
-# OPEN_ROCKET_TRACKER
+# ORCA OPEN ROCKET TRACKER 
 
-Open source, low cost, long range (15km) GPS tracker for rocketry. Uses a 4 layer board designed in Fusion 360 Electronics. Designed to fit in the smallest rockets at only 20mm x 40mm board size (plus antenna and battery you use). 
+Open source, low cost, long range (~10km) GPS tracker for rocketry. Uses a 4 layer board designed in Autodesk Fusion. Designed to fit in the smallest rockets at only 22mm x 40mm board size (plus antenna and battery you use). 
 
-No radio licence required within Australia. A second board can be used as a base station to log position data via a serial input on a laptop. 
+No radio licence required within Australia. A second board without the GPS or barometer installed can be used as a low base station to log position data via a serial input on a laptop. 
 
-![image](https://github.com/roboticsmick/OPEN_ROCKET_TRACKER/assets/70121687/0f4b6a38-8444-4cc8-9088-4b34cedbe52a)
+![image](https://github.com/user-attachments/assets/c7ade0d9-c0fa-4642-a546-5e5b196535c9)
 
 CORE: WIO-E5 LoRa MODULE 
 * CPU architecture: STM32WL Cortex M4 32 bit @ 48MHz
@@ -30,14 +30,23 @@ USB-C battery charging.
 
 To do:
 * Implement in Zephyr RTOS.
-* Design low cost base station with SD card logger, and LCD screen to output GPS coordinates, and direction to rocket position usings GPS and compass.
-* Make a simple app for monitoring serial data
+* Design low cost base station
+  * SD card logger
+  * GPS
+  * Compass
+  * LCD screen to output GPS coordinates and direction to rocket position
+  * Bluetooth to connect with mobile phone to transmit GPS coordinates.
+* Develop method for plotting GPS position on mobile maps.
 
 ## Programming the Wio-E5 STM32WLE5JC Module
 
+### Connecting the STLINK debugger
+
 Connect debug pins to (STLINK-V3MINIE)[https://www.st.com/resource/en/user_manual/um2910-stlinkv3minie-debuggerprogrammer-tiny-probe-for-stm32-microcontrollers-stmicroelectronics.pdf]
 
-| STM32WLE5JC | STLINK | 
+Use a OPENLINK connector to connect the STLINK to the Rocket tracker. The connection is the same as the Wio-E5 mini developer board. 
+
+| Wio-E5 STM32WLE5JC | STLINK | 
 |---|---|
 | DIO | SWDIO / TMS / STDC14 PIN 4 / MIPI10 PIN 2 |
 | CLK | SWCLK / CLK / STDC14 PIN 6 / MIPI10 PIN 4 |
@@ -45,8 +54,22 @@ Connect debug pins to (STLINK-V3MINIE)[https://www.st.com/resource/en/user_manua
 | RST | RST / T_NRST / STDC14 PIN 12 / MIPI10 PIN 10 |
 | 3V3 | VCC / T_VCC / STDC14 PIN 3 / MIPI10 PIN 1 |
 
-Choose ST-LINK and set Reset Mode -> hardware reset -> Connect
-Open the OB tab -> Change RDP" (Read-out Protection) to AA -> Apply
+Power the STLINK with a USB-C cable. 
+
+Power the Wio-E5 STM32WLE5JC Module with another USB-C cable.
+
+### Change read only protection to allow flashing with custom program
+
+The first time you program a Wio-E5 STM32WLE5JC Module you need to remove Read-out Protection (RDP) first with STM32Cube Programmer.
+
+1. Download STM32Cube Programmer and run
+2. Connect the STLINK debugger 
+3. Choose ST-LINK and set Reset Mode -> hardware reset -> Connect
+4. Open the OB tab -> Change RDP to AA -> Apply
+
+Once saved, this doesn't need to be done again.
+
+### Programming via Arduino
 
 Add the following board URL (under File / Preferences / Additional board URLs):
 
@@ -57,4 +80,37 @@ Under menu Tools/Board/Boards manager, search for STM32 and install 'STM32 MCU b
 
 Select the board: Tools -> Board -> STM32 MCU Based Boards -> LoRa board
 Select the board number: Tools -> Boards part number -> Lora-E5-mini
+
+The following libraries need to be added to flash the LORA_tx program in Arduino.
+
+#include <RadioLib.h>
+#include <SparkFun_u-blox_GNSS_Arduino_Library.h>
+#include <MS5x.h>
+
+Select the port connected to the to the STLINK debugger.
+
+Flash the LORA_tx.ino to the transmitter, and the LORA_rx.ino to the base station reciever. 
+
+### Debug Serial output
+
+By default the LORA_tx program prints the sensor and transmit data to the serial monitor with a BAUD rate of 115200. Once you have the transmitter and reciever set up correctly set the debug to false (line 24 of LORA_tx.ino):
+
+// -----------------------------------------------------------------------------
+// Constants & Config
+// -----------------------------------------------------------------------------
+#define TX_PACKET_SIZE 25
+#define TX_INTERVAL    500       // Transmit interval in ms (2 Hz)
+bool debugEnabled    = false;    // Set to false to disable debug prints via serial
+
+## Power and Charging 
+
+The board can be powered with a 3.3V battery. The 3.3V battery can be charged via a USB-C cable. 
+
+### LED power status 
+* A red LED will show when powered.
+* An orange LED will show when charging.
+* The orange LED will turn off when fully charged and connected via a USB-C cable.
+
+
+
 
